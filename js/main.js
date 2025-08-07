@@ -84,7 +84,7 @@ function renderCart() {
 		const message = entries
 			.map(([_, item]) => `- ${item.brand} ${item.name} x${item.qty} (${formatPrice(item.qty * item.price)})`)
 			.join("%0A");
-		const yourPhoneNumber = "5491131567350"; // replace with your WhatsApp business number
+		const yourPhoneNumber = "nan"; // replace with your WhatsApp business number
 
 		// when building the link:
 		whatsappButton.href = `https://wa.me/${yourPhoneNumber}?text=${encodeURIComponent("Hola! Quiero pedir:\n" + message)}`;
