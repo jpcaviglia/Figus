@@ -68,15 +68,24 @@ function scrollToContact() {
 }
 function renderProducts() {
    const search = $("search").value.toLowerCase();
-   const type = $("type").value;
+  
 
    const sorted = [...products].sort((a, b) =>
       a.name.localeCompare(b.name, "es")
    );
 
    const filtered = sorted
-      .filter(p => p.name.toLowerCase().includes(search))
-      .filter(p => !type || p.type === type || p.name.includes(type));
+      .filter(p => p.name.toLowerCase().includes(search));
+
+   if (filtered.length === 0) {
+      $("products").innerHTML = `
+      <div class="col-span-full text-center py-16 text-gray-500">
+         <div class="text-lg font-medium">No se encontraron resultados</div>
+         <div class="text-sm mt-1">Intentá con otra búsqueda</div>
+      </div>
+   `;
+      return;
+   }
 
    $("products").innerHTML = filtered.map(p => `
 <div class="group bg-white/80 backdrop-blur rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 p-4 min-h-[320px]">
@@ -214,7 +223,6 @@ $("floatingCart").onclick = () => $("cartPanel").classList.remove("translate-x-f
 $("closeCart").onclick = () => $("cartPanel").classList.add("translate-x-full");
 
 $("search").oninput = renderProducts;
-$("type").onchange = renderProducts;
 
 $("checkoutBtn").onclick = () => {
    let msg = "Pedido:%0A";
