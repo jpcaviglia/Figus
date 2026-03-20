@@ -4,420 +4,165 @@
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <title>Catálogo</title>
-   <style>
-      /* Base layout */
-      body {
-         font-family: system-ui;
-         margin: 0;
-         background: #f4f6f8;
-      }
-
-      header {
-         background: #111;
-         color: #fff;
-         padding: 16px;
-         text-align: center;
-         font-weight: 600;
-      }
-
-      /* Filters */
-      .controls {
-         padding: 10px;
-         display: flex;
-         flex-wrap: wrap;
-         gap: 10px;
-         background: white;
-         position: sticky;
-         top: 0;
-         z-index: 2;
-      }
-
-         .controls input, .controls select {
-            padding: 8px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-         }
-
-      /* Grid */
-      .container {
-         display: grid;
-         gap: 16px;
-         padding: 16px;
-      }
-
-      @media(min-width:600px) {
-         .container {
-            grid-template-columns: repeat(2,1fr)
-         }
-      }
-
-      @media(min-width:1000px) {
-         .container {
-            grid-template-columns: repeat(3,1fr)
-         }
-      }
-
-      /* Product card */
-      .card {
-         background: white;
-         border-radius: 14px;
-         padding: 12px;
-         box-shadow: 0 6px 16px rgba(0,0,0,.08)
-      }
-
-         .card img {
-            width: 100%;
-            border-radius: 10px
-         }
-
-
-      h3 {
-         margin: 6px 0
-      }
-
-      .price {
-         font-weight: bold
-      }
-
-      .sub {
-         font-size: 13px;
-         color: #555
-      }
-
-      /* Quantity controls */
-      .qty {
-         display: flex;
-         gap: 6px;
-         margin-top: 8px;
-         align-items: center
-      }
-
-         .qty input {
-            width: 50px;
-            text-align: center;
-            padding: 4px
-         }
-
-      button {
-         padding: 8px;
-         border: none;
-         border-radius: 8px;
-         background: #111;
-         color: #fff;
-         cursor: pointer
-      }
-
-         button:hover {
-            background: #333
-         }
-
-      /* Floating cart button */
-      .floating-cart {
-         position: fixed;
-         bottom: 20px;
-         right: 20px;
-         background: #111;
-         color: white;
-         border-radius: 50%;
-         width: 60px;
-         height: 60px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         font-size: 22px;
-         cursor: pointer;
-         z-index: 10; /* ← FIX */
-      }
-
-      .hidden {
-         display: none
-      }
-
-      /* Cart panel */
-      .cart-panel {
-         position: fixed;
-         right: 0;
-         top: 0;
-         width: 320px;
-         height: 100%;
-         background: white;
-         box-shadow: -4px 0 16px rgba(0,0,0,0.1);
-         padding: 16px;
-         overflow-y: auto;
-         z-index: 20;
-      }
-
-      .cart-header {
-         display: flex;
-         justify-content: space-between;
-         align-items: center
-      }
-
-      .cart-item {
-         display: flex;
-         gap: 10px;
-         margin-bottom: 12px;
-         align-items: center
-      }
-
-         .cart-item img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px
-         }
-
-      .cart-item-info {
-         flex: 1;
-         font-size: 13px
-      }
-
-      .cart-item-controls input {
-         width: 50px
-      }
-
-      .checkout-btn {
-         width: 100%;
-         background: #25D366;
-         margin-top: 10px
-      }
-   </style>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<div id="viewer"
+     class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition">
 
-   <header>Catálogo</header>
+   <img id="viewerImg"
+        class="max-w-[90%] max-h-[85%] rounded-2xl shadow-2xl scale-95 transition" />
 
-   <!-- Filters -->
-   <div class="controls">
-      <input type="text" id="search" placeholder="Buscar...">
-      <select id="type">
+</div>
+<body class="bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 text-gray-800">
+
+   <!-- HEADER -->
+   <header class="sticky top-0 z-20 backdrop-blur-md bg-white/60 border-b border-white/40 shadow-sm">
+      <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center">
+
+         <!-- LEFT -->
+         <div class="flex items-center gap-3">
+            <img src="content/img/cards.png" class="w-8 h-8 object-contain" />
+            <div>
+               <h1 class="text-lg font-semibold leading-none">Planeta Figus</h1>
+               <span class="text-xs text-gray-500">Almagro, Ciudad Autonoma de Buenos Aires</span>
+            </div>
+         </div>
+
+         <!-- RIGHT -->
+         <div class="flex items-center gap-3">
+
+            <!-- WhatsApp -->
+            <button onclick="scrollToContact()"
+                    class="p-2 rounded-full hover:bg-gray-200 transition flex items-center gap-1 text-sm">
+               <i data-lucide="phone"></i>
+               Contacto
+            </button>
+
+            <!-- Cart -->
+            <div id="floatingCart"
+                 class="hidden relative cursor-pointer p-2 rounded-full hover:bg-gray-200 transition">
+               <i data-lucide="shopping-cart"></i>
+               <span id="cartCount"
+                     class="absolute -top-1 -right-1 bg-black text-white text-xs px-1.5 rounded-full"></span>
+            </div>
+
+         </div>
+      </div>
+   </header>
+   <section class="max-w-6xl mx-auto px-4 pt-8 pb-6">
+
+      <!-- TITLE -->
+      <div class="mb-6">
+         <h2 class="text-3xl font-semibold tracking-tight">Figus San Cristóbal</h2>
+         <p class="text-gray-600 mt-1">Almagro, Ciudad Autónoma de Buenos Aires</p>
+      </div>
+
+      <!-- CAROUSEL -->
+      <div class="relative overflow-hidden rounded-3xl">
+         <div id="carousel" class="flex transition-transform duration-500">
+            <!-- slides injected by JS -->
+         </div>
+
+         <!-- controls -->
+         <button onclick="prevSlide()"
+                 class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur p-2 rounded-full shadow">
+            ‹
+         </button>
+
+         <button onclick="nextSlide()"
+                 class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur p-2 rounded-full shadow">
+            ›
+         </button>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-6">
+         <a href="https://wa.me/1165532173?text=Hola,%20quiero%20consultar%20sobre%20figuritas"
+            target="_blank"
+            class="inline-block bg-green-500 text-white px-6 py-3 rounded-full shadow hover:bg-green-600 transition">
+            Contactanos por WhatsApp
+         </a>
+      </div>
+
+   </section>
+   <!-- FILTERS -->
+   <div class="max-w-6xl mx-auto p-4 flex gap-3 flex-wrap">
+      <input id="search" placeholder="Buscar..." class="flex-1 p-3 rounded-xl border shadow-sm focus:ring-2 focus:ring-black outline-none" />
+      <select id="type" class="p-3 rounded-xl border shadow-sm">
          <option value="">Tipo</option>
          <option value="Sobres">Sobres</option>
          <option value="Album">Album</option>
       </select>
    </div>
 
-   <!-- Product grid -->
-   <div class="container" id="products"></div>
+   <!-- GRID -->
+   <div id="products" class="max-w-6xl mx-auto mb-10 p-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+   <section id="contacto" class="max-w-6xl mx-auto px-4 py-12">
 
-   <!-- Floating cart trigger -->
-   <div id="floatingCart" class="floating-cart hidden">🛒</div>
+      <h2 class="text-2xl font-semibold mb-6">Contacto</h2>
 
-   <!-- Cart panel -->
-   <div id="cartPanel" class="cart-panel hidden">
-      <div class="cart-header">
-         <h3>Carrito</h3>
-         <button id="closeCart">✕</button>
+      <div class="bg-white rounded-3xl p-6 shadow-sm space-y-4">
+
+         <!-- Phone -->
+         <div>
+            <div class="text-sm text-gray-500">Teléfono</div>
+            <div class="font-medium">+54 11 6553-2173</div>
+         </div>
+
+         <!-- WhatsApp -->
+         <div>
+            <div class="text-sm text-gray-500">WhatsApp</div>
+            <a href="https://wa.me/1165532173?text=Hola,%20tenia%20una%20consulta%20sobre%20las%20figuritas"
+               target="_blank"
+               class="text-green-600 hover:underline">
+               Enviar mensaje
+            </a>
+         </div>
+
+         <!-- Email -->
+         <div>
+            <div class="text-sm text-gray-500">Email</div>
+            <a href="mailto:figussancristobal@gmail.com"
+               class="text-blue-600 hover:underline">
+               figussancristobal@gmail.com
+            </a>
+         </div>
+
+         <!-- Maps -->
+         <div>
+            <div class="text-sm text-gray-500">Ubicación</div>
+            <a href="https://www.google.com/maps?q=-34.604578,-58.407191"
+               target="_blank"
+               class="text-blue-600 hover:underline">
+               Ver en Google Maps
+            </a>
+         </div>
+
       </div>
-      <div id="cartItems"></div>
-      <div id="cartTotal"></div>
-      <button class="checkout-btn" id="checkoutBtn">Enviar por WhatsApp</button>
+
+   </section>
+   <!-- TOAST -->
+   <div id="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-3 bg-black text-white px-5 py-2 rounded-full opacity-0 transition-all duration-300">
    </div>
-   <script>
-      const products = [
-         { id: 1, img:"img/sobres_guerreras.webp", name: "Guerreras Kpop Sobres", price: 769, pack: 667, retail: 1000 },
-         { id: 2, img:"img/album_guerreras.webp", name: "Guerreras Kpop Album", price: 4615, pack: 3500, retail: 6000 },
-         { id: 3, img:"img/sobres_adrenalynMundial.webp", name: "Adrenalyn Mundial", price: 2692, pack: 2163, retail: 3500 },
-         { id: 4, img:"img/sobres_tocaLife.webp",  name: "Toca Life Sobres", price: 769, pack: 667, retail: 1000 },
-         { id: 5, img:"img/album_tocaLife.webp",  name: "Toca Life Album", price: 3846, pack: 3500, retail: 5000 },
-         { id: 6, img:"img/sobres_pokemonMegaevolucion.webp",  name: "Pokemon Sobres", price: 769, pack: 667, retail: 1000 },
-         { id: 7, img:"img/album_pokemonMegaevolucion.webp",  name: "Pokemon Album", price: 3846, pack: 3500, retail: 5000 },
-         { id: 8, img:"img/sobres_bts.webp", name: "BTS Sobres", price: 962, pack: 780, retail: 1250 },
-         { id: 9, img:"img/album_bts.webp", name: "BTS Album", price: 5385, pack: 4200, retail: 7000 },
-         { id: 10,img:"img/sobres_zootopia2.webp", name: "Zootopia Sobres", price: 1154, pack: 980, retail: 1500 },
-         { id: 11,img:"img/album_zootopia2.webp", name: "Zootopia Album", price: 6538, pack: 5650, retail: 8500 }
-      ];
 
-      let cart = {};
-
-      const $ = id => document.getElementById(id);
-
-      function format(n) {
-         return "$" + n.toLocaleString("es-AR");
-      }
-
-      function getQty(id) {
-         return cart[id]?.qty || 0;
-      }
-
-      function setQty(id, val) {
-         const qty = Math.max(0, parseInt(val, 10) || 0);
-         const product = products.find(p => p.id === id);
-         if (!product) return;
-
-         if (qty === 0) delete cart[id];
-         else cart[id] = { qty, product };
-
-         updateUI();
-      }
-
-      /* ---------- PRODUCTS ---------- */
-
-      function renderProducts() {
-         const container = $("products");
-         container.innerHTML = "";
-
-         const search = $("search").value.toLowerCase();
-         const type = $("type").value;
-
-         const filtered = products
-            .filter(p => p.name.toLowerCase().includes(search))
-            .filter(p => !type || p.name.includes(type));
-
-         filtered.forEach(p => {
-            const div = document.createElement("div");
-            div.className = "card";
-
-            div.innerHTML = `
-         <img src="${p.img}">
-         <h3>${p.name}</h3>
-         <div class="price">${format(p.price)}</div>
-         <div class="sub">Costo: ${format(p.pack)}</div>
-         <div class="sub">Precio sugerido al público: ${format(p.retail)}</div>
-         <div class="qty">
-           <button data-id="${p.id}" data-delta="-1">-</button>
-           <input type="number" min="0" value="${getQty(p.id)}" data-input="${p.id}">
-           <button data-id="${p.id}" data-delta="1">+</button>
-         </div>
-       `;
-
-            container.appendChild(div);
-         });
-      }
-
-      /* ---------- CART ---------- */
-
-      function renderCart() {
-         const list = $("cartItems");
-         list.innerHTML = "";
-
-         let total = 0;
-         let count = 0;
-
-         Object.values(cart).forEach(item => {
-            total += item.qty * item.product.price;
-            count += item.qty;
-
-            const row = document.createElement("div");
-            row.className = "cart-item";
-
-            row.innerHTML = `
-         <img src="https://via.placeholder.com/50">
-         <div class="cart-item-info">
-           <div>${item.product.name}</div>
-           <div>${format(item.qty * item.product.price)}</div>
-         </div>
-         <input type="number" min="0" value="${item.qty}" data-cart-input="${item.product.id}">
-       `;
-
-            list.appendChild(row);
-         });
-
-         $("cartTotal").textContent = `Total: ${format(total)}`;
-         $("floatingCart").classList.toggle("hidden", count === 0);
-      }
-
-      /* ---------- UI SYNC ---------- */
-
-      function updateUI() {
-         updateFloatingCart();
-
-         if (!$("cartPanel").classList.contains("hidden")) {
-            renderCart();
-         }
-
-         syncInputs(); // keep product inputs in sync WITHOUT re-render
-      }
-
-      function updateFloatingCart() {
-         const count = Object.values(cart).reduce((a, b) => a + b.qty, 0);
-         $("floatingCart").classList.toggle("hidden", count === 0);
-      }
-
-      function syncInputs() {
-         document.querySelectorAll("[data-input]").forEach(input => {
-            const id = Number(input.dataset.input);
-            input.value = getQty(id);
-         });
-      }
-      /* ---------- EVENTS ---------- */
-
-      document.addEventListener("click", e => {
-
-         // +/- buttons
-         if (e.target.dataset.id) {
-            const id = Number(e.target.dataset.id);
-            const delta = Number(e.target.dataset.delta);
-            setQty(id, getQty(id) + delta);
-         }
-         if (e.target.closest("#floatingCart")) {
-            const panel = $("cartPanel");
-
-            panel.classList.remove("hidden");
-
-            // 🔥 HARD RESET + RENDER FROM STATE
-            const list = $("cartItems");
-            list.innerHTML = "";
-
-            let total = 0;
-
-            Object.values(cart).forEach(item => {
-               total += item.qty * item.product.price;
-
-               const row = document.createElement("div");
-               row.className = "cart-item";
-
-               row.innerHTML = `
-      <img src="https://via.placeholder.com/50">
-      <div class="cart-item-info">
-        <div>${item.product.name}</div>
-        <div>${format(item.qty * item.product.price)}</div>
+   <!-- CART -->
+   <div id="cartPanel" class="fixed right-0 top-0 w-full sm:w-96 h-full bg-white shadow-2xl p-4 z-30 flex flex-col transition-transform duration-300 translate-x-full">
+      <div class="flex justify-between items-center mb-4">
+         <h2 class="text-lg font-semibold">Carrito</h2>
+         <button id="closeCart" class="p-1 hover:bg-gray-200 rounded"><i data-lucide="x"></i></button>
       </div>
-      <input type="number" min="0" value="${item.qty}">
-    `;
 
-               list.appendChild(row);
-            });
+      <div id="cartItems" class="flex-1 overflow-y-auto space-y-4"></div>
 
-            $("cartTotal").textContent = `Total: ${format(total)}`;
-         }
+      <div id="cartTotal" class="font-semibold mt-4 text-lg"></div>
+      <button id="checkoutBtn" class="mt-3 bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition">Enviar por WhatsApp</button>
+   </div>
 
-         // close cart
-         if (e.target.id === "closeCart") {
-            $("cartPanel").classList.add("hidden");
-         }
-      });
+   <script src="content/js/main.js">
 
-      /* ONLY change (no input spam) */
-      document.addEventListener("change", e => {
-         if (e.target.dataset.input) {
-            setQty(Number(e.target.dataset.input), e.target.value);
-         }
-
-         if (e.target.dataset.cartInput) {
-            setQty(Number(e.target.dataset.cartInput), e.target.value);
-         }
-      });
-
-      /* filters */
-      $("search").oninput = renderProducts;
-      $("type").onchange = renderProducts;
-
-      /* checkout */
-      $("checkoutBtn").onclick = () => {
-         let msg = "Pedido:%0A%0A";
-         let total = 0;
-
-         Object.values(cart).forEach(item => {
-            msg += `${item.product.name} x${item.qty} - ${format(item.qty * item.product.price)}%0A`;
-            total += item.qty * item.product.price;
-         });
-
-         msg += `%0ATotal: ${format(total)}`;
-         window.open(`https://wa.me/1165532173?text=${msg}`, "_blank");
-      };
-
-      /* init */
-      renderProducts();
    </script>
+
 </body>
 </html>
