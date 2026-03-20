@@ -131,11 +131,28 @@
 
          <!-- Maps -->
          <div>
-            <div class="text-sm text-gray-500">Ubicación</div>
+            <div class="text-sm text-gray-500 mb-2">Ubicación</div>
+
             <a href="https://www.google.com/maps?q=-34.604578,-58.407191"
                target="_blank"
-               class="text-blue-600 hover:underline">
-               Ver en Google Maps
+               class="block rounded-2xl overflow-hidden group shadow-sm relative">
+
+               <!-- IMAGE -->
+               <img src="content/img/location.png"
+                    class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" />
+
+               <!-- PIN ICON (this is step 4) -->
+               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div class="bg-white/80 backdrop-blur p-2 rounded-full shadow">
+                     <i data-lucide="map-pin"></i>
+                  </div>
+               </div>
+
+               <!-- LABEL -->
+               <div class="absolute bottom-0 left-0 right-0 bg-black/40 text-white text-sm px-3 py-2">
+                  Ver en Google Maps
+               </div>
+
             </a>
          </div>
 
