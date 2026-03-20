@@ -98,9 +98,9 @@
   {
     "id": 13,
     "type": "Mazo",
-    "img": "content/img/album_zootopia2.webp",
+    "img": "content/img/album_pokemonLegends13.webp",
     "name": "Pokemon Legends Serie 13 - Mazo",
-    "price": 6500,
-    "retail": 5000
+    "price": 5000,
+    "retail": 6500
   }
 ]
