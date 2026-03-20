@@ -1,13 +1,106 @@
 [
-         { "id": 1, "type":"Sobres","img":"content/img/sobres_guerreras.webp", "name": "Guerreras Kpop - Sobres", "price": 769, "pack": 667, "retail": 1000 },
-         { "id": 2, "type":"Sobres","img":"content/img/album_guerreras.webp", "name": "Guerreras Kpop - Album", "price": 4615, "pack": 3500, "retail": 6000 },
-         { "id": 3, "type":"Sobres","img":"content/img/sobres_adrenalynMundial.webp", "name": "Adrenalyn Mundial - Cartas", "price": 2692, "pack": 2163, "retail": 3500 },
-         { "id": 4, "type":"Sobres","img":"content/img/sobres_tocaLife.webp",  "name": "Toca Life - Sobres", "price": 769, "pack": 667, "retail": 1000 },
-         { "id": 5, "type":"Sobres","img":"content/img/album_tocaLife.webp",  "name": "Toca Life - Album", "price": 3846, "pack": 3500, "retail": 5000 },
-         { "id": 6, "type":"Sobres","img":"content/img/sobres_pokemonMegaevolucion.webp",  "name": "Pokemon - Sobres", "price": 769, "pack": 667, "retail": 1000 },
-         { "id": 7, "type":"Sobres","img":"content/img/album_pokemonMegaevolucion.webp",  "name": "Pokemon - Album", "price": 3846, "pack": 3500, "retail": 5000 },
-         { "id": 8, "type":"Sobres","img":"content/img/sobres_bts.webp", "name": "BTS - Sobres", "price": 962, "pack": 780, "retail": 1250 },
-         { "id": 9, "type":"Sobres","img":"content/img/album_bts.webp", "name": "BTS - Album", "price": 5385, "pack": 4200, "retail": 7000 },
-         { "id": 10,"type":"Sobres","img":"content/img/sobres_zootopia2.webp", "name": "Zootopia - Sobres", "price": 1154, "pack": 980, "retail": 1500 },
-         { "id": 11,"type":"Sobres","img":"content/img/album_zootopia2.webp", "name": "Zootopia - Album", "price": 6538, "pack": 5650, "retail": 8500 }
-      ]
+  {
+    "id": 1,
+    "type": "Sobres",
+    "img": "content/img/sobres_guerreras.webp",
+    "name": "Guerreras Kpop - Sobres",
+    "price": 770,
+    "retail": 1000
+  },
+  {
+    "id": 2,
+    "type": "Sobres",
+    "img": "content/img/album_guerreras.webp",
+    "name": "Guerreras Kpop - Album",
+    "price": 4610,
+    "retail": 6000
+  },
+  {
+    "id": 3,
+    "type": "Sobres",
+    "img": "content/img/sobres_adrenalynMundial.webp",
+    "name": "Adrenalyn Mundial - Cartas",
+    "price": 2690,
+    "retail": 3500
+  },
+  {
+    "id": 4,
+    "type": "Sobres",
+    "img": "content/img/sobres_tocaLife.webp",
+    "name": "Toca Life - Sobres",
+    "price": 770,
+    "retail": 1000
+  },
+  {
+    "id": 5,
+    "type": "Sobres",
+    "img": "content/img/album_tocaLife.webp",
+    "name": "Toca Life - Album",
+    "price": 3840,
+    "retail": 5000
+  },
+  {
+    "id": 6,
+    "type": "Sobres",
+    "img": "content/img/sobres_pokemonMegaevolucion.webp",
+    "name": "Pokemon - Sobres",
+    "price": 760,
+    "retail": 1000
+  },
+  {
+    "id": 7,
+    "type": "Sobres",
+    "img": "content/img/album_pokemonMegaevolucion.webp",
+    "name": "Pokemon - Album",
+    "price": 3840,
+    "retail": 5000
+  },
+  {
+    "id": 8,
+    "type": "Sobres",
+    "img": "content/img/sobres_bts.webp",
+    "name": "BTS - Sobres",
+    "price": 960,
+    "retail": 1250
+  },
+  {
+    "id": 9,
+    "type": "Sobres",
+    "img": "content/img/album_bts.webp",
+    "name": "BTS - Album",
+    "price": 5380,
+    "retail": 7000
+  },
+  {
+    "id": 10,
+    "type": "Sobres",
+    "img": "content/img/sobres_zootopia2.webp",
+    "name": "Zootopia - Sobres",
+    "price": 1150,
+    "retail": 1500
+  },
+  {
+    "id": 11,
+    "type": "Sobres",
+    "img": "content/img/album_zootopia2.webp",
+    "name": "Zootopia - Album",
+    "price": 6530,
+    "retail": 8500
+  },
+  {
+    "id": 12,
+    "type": "Sobres",
+    "img": "content/img/sobres_pokemonLegends13.webp",
+    "name": "Pokemon Legends Serie 13 - Sobres",
+    "price": 770,
+    "retail": 1000
+  },
+  {
+    "id": 13,
+    "type": "Mazo",
+    "img": "content/img/album_zootopia2.webp",
+    "name": "Pokemon Legends Serie 13 - Mazo",
+    "price": 6500,
+    "retail": 5000
+  }
+]

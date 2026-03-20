@@ -24,18 +24,19 @@ function toast(msg) {
 let currentSlide = 0;
 
 function renderCarousel() {
-   const featured = products.slice(0, 5); // first 5 items
+   const featured = products.slice(0, 5);
+
    $("carousel").innerHTML = featured.map(p => `
       <div class="min-w-full h-56 relative">
          <img src="${p.img}" class="w-full h-full object-cover"/>
+
+         <!-- overlay -->
          <div class="absolute bottom-0 left-0 right-0 bg-black/40 text-white p-4">
             <div class="font-medium">${p.name}</div>
-            <div>${format(p.price)}</div>
          </div>
       </div>
    `).join("");
 }
-
 function updateCarousel() {
    $("carousel").style.transform = `translateX(-${currentSlide * 100}%)`;
 }
@@ -69,17 +70,23 @@ function renderProducts() {
    const search = $("search").value.toLowerCase();
    const type = $("type").value;
 
-   const filtered = products.filter(p => p.name.toLowerCase().includes(search)).filter(p => !type || p.type === type || p.name.includes(type));
+   const sorted = [...products].sort((a, b) =>
+      a.name.localeCompare(b.name, "es")
+   );
+
+   const filtered = sorted
+      .filter(p => p.name.toLowerCase().includes(search))
+      .filter(p => !type || p.type === type || p.name.includes(type));
 
    $("products").innerHTML = filtered.map(p => `
-  <div class="group bg-white/80 backdrop-blur rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 p-3">
+<div class="group bg-white/80 backdrop-blur rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 p-4 min-h-[320px]">
 
     <!-- IMAGE -->
     <div class="relative overflow-hidden rounded-2xl cursor-pointer"
          onclick="openViewer('${p.img}')">
 
       <img src="${p.img}"
-           class="w-full h-48 object-cover transition duration-500 group-hover:scale-110"/>
+           class="w-full h-56 object-cover transition duration-500 group-hover:scale-110"/>
 
       <!-- subtle overlay -->
       <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
